@@ -27,11 +27,8 @@ tangram.scene.subscribe({
 function handleHover(evt) {
    if (evt.feature) {
       console.log(evt)
-      document.getElementById('tooltip').style.left = evt.pixel.x + 'px';
-      document.getElementById('tooltip').style.top = evt.pixel.y + 'px';
-      document.getElementById('tooltip').style.display = 'block';
 
-      let text  = '';
+      let text = '';
       if (evt.feature.source_name === '_rapid_bus') {
          text = 'Rapid Bus';
       } else if (evt.feature.source_name === '_rapid_bus_transit') {
@@ -39,8 +36,13 @@ function handleHover(evt) {
       } else if (evt.feature.source_name === '_street_car') {
          text = 'Street Car';
       }
-      document.getElementById('tooltip').innerText = text;
+
+      var popup = L.popup({className: 'custom', closeButton: false})
+         .setLatLng(evt.leaflet_event.latlng)
+         .setContent(text)
+         .openOn(map);
    } else {
+      map.closePopup();
       // setTimeout(() => {
       //    document.getElementById('tooltip').style.display = 'none'
       // }, 1000)
