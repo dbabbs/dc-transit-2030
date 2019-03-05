@@ -8,23 +8,31 @@ sources:
         max_zoom: 16
     _rapid_bus:
         type: GeoJSON
-        url: https://xyz.api.here.com/hub/spaces/15TWz6nb/tile/web/{z}_{x}_{y}
+        #url: https://xyz.api.here.com/hub/spaces/15TWz6nb/tile/web/{z}_{x}_{y}
+        url: https://xyz.api.here.com/hub/spaces/uUcr2nxd/tile/web/{z}_{x}_{y}
         url_params:
             access_token: AbuvUKANJJEZR4nb1zkEXBE
     _rapid_bus_transit:
         type: GeoJSON
-        url: https://xyz.api.here.com/hub/spaces/0PDSZ44l/tile/web/{z}_{x}_{y}
+        #url: https://xyz.api.here.com/hub/spaces/0PDSZ44l/tile/web/{z}_{x}_{y}
+        url: https://xyz.api.here.com/hub/spaces/vZe6Isdm/tile/web/{z}_{x}_{y}
         url_params:
             access_token: AbuvUKANJJEZR4nb1zkEXBE
     _street_car:
         type: GeoJSON
-        url: https://xyz.api.here.com/hub/spaces/cLkpV9fM/tile/web/{z}_{x}_{y}
+        #url: https://xyz.api.here.com/hub/spaces/cLkpV9fM/tile/web/{z}_{x}_{y}
+        url: https://xyz.api.here.com/hub/spaces/rFrdDb7a/tile/web/{z}_{x}_{y}
         url_params:
             access_token: AbuvUKANJJEZR4nb1zkEXBE
 
 global:
     width: [[5, 5000], [8, 800], [10, 200], [12, 160],[14, 60], [18, 20]]
-
+    language: en # optional ISO 2-char code
+    language_text_source: |
+        function() {
+            // Use preferred language label if available
+            return (global.language && feature['name:'+global.language]) || feature.name;
+        }
 layers:
     rapid_bus:
         data: { source: _rapid_bus }
@@ -52,6 +60,54 @@ layers:
                 order: 10002
                 interactive: true
 
+    places:
+        data: { source: xyz_osm }
+        city-points:
+            filter:
+                kind: locality
+                # name:
+                #    not: Arlington
+                not:
+                   name: Arlington
+                kind_detail: city
+                $zoom: { max: 18 }
+            draw:
+                 text:
+                     text_source: global.language_text_source
+                     priority: 10
+                     order: 999
+                     font:
+                         family: Roboto Mono
+                         # size: 12px
+                         fill: '#C3CDD4'
+                         stroke: { color: white, width: 4 }
+                         transform: uppercase
+                         # weight: bold
+                         size: [[4, 15px], [8, 18px], [12, 26px]]
+                         buffer: 2px
+        city-points:
+            filter:
+                kind: locality
+                # name:
+                #    not: Arlington
+                not:
+                   name: Arlington
+                kind_detail: city
+                $zoom: { max: 18 }
+            draw:
+                 text:
+                     text_source: global.language_text_source
+                     priority: 10
+                     order: 999
+                     font:
+                         family: Roboto Mono
+                         # size: 12px
+                         fill: '#C3CDD4'
+                         stroke: { color: white, width: 4 }
+                         transform: uppercase
+                         # weight: bold
+                         size: [[4, 15px], [8, 18px], [12, 26px]]
+                         buffer: 2px
     earth:
         data: { source: xyz_osm }
         draw:
