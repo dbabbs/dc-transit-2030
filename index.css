@@ -58,7 +58,7 @@ a {
 }
 
 a:hover {
-   font-weight: bold;
+   /* font-weight: bold; */
    color: #2C5F91;
    transform: translateY(-3px);
 }
