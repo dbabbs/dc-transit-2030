@@ -6,6 +6,7 @@ sources:
         type: MVT
         url: https://xyz.api.here.com/tiles/osmbase/512/all/{z}/{x}/{y}.mvt
         max_zoom: 16
+        tile_size: 512
         url_params:
             access_token: AQHyuv2gpBaEgEGvHzdP5_k
     _rapid_bus:
